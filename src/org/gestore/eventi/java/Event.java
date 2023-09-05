@@ -71,9 +71,27 @@ Aggiungete eventuali metodi (public e private) che vi aiutino a svolgere le funz
     }
 
     //metodi
-    public int reservedSeats(){
-        int reservedSeats;
+    public int availableSeats(){
+        return totalSeat - reservedSeats;
+    }
+    public void reservedSeats(int numberOfSeats) throws RuntimeException{
+        if (numberOfSeats > availableSeats()) {
+            throw new RuntimeException("there are not more available seats");
+        }
+        if (date.isBefore(LocalDate.now())) {
+            throw new RuntimeException("select a valid date");
+        }
+        reservedSeats = reservedSeats + numberOfSeats;
+    }
 
+    public void canceledSeats(int numberOfSeats) throws RuntimeException{
+        if (reservedSeats < numberOfSeats) {
+            throw new RuntimeException("there are no reservations to remove");
+        }
+        if (date.isBefore(LocalDate.now())) {
+            throw new RuntimeException("select a valid date");
+        }
+        reservedSeats = reservedSeats - numberOfSeats;
     }
 
 
